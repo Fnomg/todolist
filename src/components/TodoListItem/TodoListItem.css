@@ -1,0 +1,12 @@
+.todolist-item__wrap {
+    align-items: center;
+}
+
+.done {
+    text-decoration: line-through;
+}
+
+.important {
+    color: tomato;
+    font-weight: bold;
+}

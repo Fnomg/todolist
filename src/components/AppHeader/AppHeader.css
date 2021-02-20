@@ -1,0 +1,7 @@
+.app-header__wrap {
+    display: flex;
+    margin-top: 50px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+}

@@ -1,8 +1,14 @@
 import React from 'react';
+import ItemStatusFilter from '../ItemStatusFilter/ItemStatusFilter'
+import "./SearchPanel.css";
+
 
 const SearchPanel = () => {
     return (
-        <input placeholder='search this'></input>
+        <div className="d-flex">
+            <input placeholder='type to search'></input>
+            <ItemStatusFilter />
+        </div>
     )
 }
 
