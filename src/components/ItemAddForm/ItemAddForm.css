@@ -1,0 +1,6 @@
+.item-add-form__wrap {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 30px;
+
+}
