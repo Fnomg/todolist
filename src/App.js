@@ -9,17 +9,27 @@ import "./index.css"
 
 class App extends Component {
 
-  maxId = 10;
 
+
+  maxId = 10;
 
   state = {
     todoData: [
-      {label: 'Drink Coffee', important: false, id: 1},
-      {label: 'Make App Awesome', important: true, id: 2},
-      {label: 'Eat meat', important: false, id: 3}
+      this.createTodoItem('Drink Coffee'),
+      this.createTodoItem('Make Awesome App'),
+      this.createTodoItem('Todo smile'),
+
     ]
   }
 
+  createTodoItem(label) {
+    return {
+      label,
+      important: false,
+      done: false,
+      id: this.maxId++
+    }
+  }
 
   deleteItem = (id) => {
     this.setState(({todoData}) => {
@@ -36,11 +46,7 @@ class App extends Component {
   }
 
   addItem = (text) => {
-    const newItem = {
-      label: text,
-      important: false,
-      id: this.maxId++
-    }
+    const newItem = this.createTodoItem(text)
 
     this.setState(({todoData}) => {
       const newArr = [ ...todoData, newItem]
@@ -50,12 +56,40 @@ class App extends Component {
     })
   }
 
+  onToggleDone = (id) => {
+    this.setState(({ todoData })=>{
+      const idx = todoData.findIndex((el) => el.id === id)
+      const oldItem = todoData[idx];
+      const newItem = {...oldItem, done: !oldItem.done}
+
+      const newArr = [...todoData.slice(0, idx),
+                      newItem,
+                      ...todoData.slice(idx + 1)]
+
+      return {
+        todoData: newArr
+      }
+    })
+  }
+
+
+  onToggleImportant = (id) => {
+    console.log('toggleImportant', id)
+  }
+
   render() {
+
+    const countDone = this.state.todoData.filter((el)=> el.done).length;
+
+
     return (
       <div className="wrap">
-        <AppHeader todo={1} done={3}/>
+        <AppHeader todo={1} done={countDone}/>
         <SearchPanel/>
-        <TodoList todos={this.state.todoData} onDeleted={this.deleteItem}/>
+        <TodoList todos={this.state.todoData}
+                  onDeleted={this.deleteItem}
+                  onToggleDone={this.onToggleDone}
+                  onToggleImportant={this.onToggleImportant}/>
         <ItemAddForm onAddItem={this.addItem}/>
       </div>
     )

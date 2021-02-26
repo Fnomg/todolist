@@ -3,31 +3,10 @@ import "./TodoListItem.css"
 
 class TodoListItem extends Component {
 
-  state = {
-    done: false,
-    important: false
-  }
-
-  onLabelClick = () => {
-    this.setState(({done}) => {
-      return {
-        done: !done
-      }
-    })
-  }
-
-  onImportantClick = () => {
-    this.setState(({important}) => {
-      return {
-        important: !important
-      }
-    })
-  }
 
   render() {
 
-    const {label, onDeleted} = this.props;
-    const {done, important} = this.state;
+    const {label, onDeleted, onToggleDone, onToggleImportant, done, important} = this.props;
 
     let classNames = 'todo-item';
 
@@ -41,12 +20,12 @@ class TodoListItem extends Component {
 
     return (
       <div className="d-flex justify-content-between todolist-item__wrap">
-        <span className={classNames} onClick={this.onLabelClick}>{label}</span>
+        <span className={classNames} onClick={onToggleDone}>{label}</span>
         <div className="btn-group">
           <button type="button" className="btn btn-danger" onClick={onDeleted}>
             <i className="fa fa-trash" aria-hidden="true"/>
           </button>
-          <button type="button" className="btn btn-warning" onClick={this.onImportantClick}>
+          <button type="button" className="btn btn-warning" onClick={onToggleImportant}>
             <i className="fa fa-exclamation" aria-hidden="true"/>
           </button>
         </div>
