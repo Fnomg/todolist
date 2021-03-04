@@ -17,6 +17,9 @@ class ItemAddForm extends Component {
   onSubmit = (e) => {
     e.preventDefault();
     this.props.onAddItem(this.state.label)
+    this.setState({
+      label: ''
+    })
   }
 
   render() {
@@ -30,8 +33,9 @@ class ItemAddForm extends Component {
         <input className="form-control"
                placeholder='add todo'
                onChange={this.onLabelChange}
+               value={this.state.label}
         />
-        <button type="button" className="btn btn-outline-secondary">
+        <button className="btn btn-outline-secondary">
           <i className="fa fa-plus-square" aria-hidden="true"/>
         </button>
       </form>
