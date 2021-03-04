@@ -56,35 +56,45 @@ class App extends Component {
     })
   }
 
+  toggleProperty = (arr, id, propName) => {
+    const idx = arr.findIndex((el) => el.id === id)
+    const oldItem = arr[idx];
+    const newItem = {...oldItem, [propName]: !oldItem[propName]}
+
+    return [
+      ...arr.slice(0, idx),
+      newItem,
+      ...arr.slice(idx + 1)
+      ]
+  }
+
   onToggleDone = (id) => {
     this.setState(({ todoData })=>{
-      const idx = todoData.findIndex((el) => el.id === id)
-      const oldItem = todoData[idx];
-      const newItem = {...oldItem, done: !oldItem.done}
-
-      const newArr = [...todoData.slice(0, idx),
-                      newItem,
-                      ...todoData.slice(idx + 1)]
-
       return {
-        todoData: newArr
+        todoData: this.toggleProperty(todoData, id, 'done')
       }
     })
   }
 
 
   onToggleImportant = (id) => {
-    console.log('toggleImportant', id)
+    this.setState(({ todoData })=>{
+      return {
+        todoData: this.toggleProperty(todoData, id, 'important')
+      }
+    })
   }
 
   render() {
+    const { todoData } = this.state;
 
-    const countDone = this.state.todoData.filter((el)=> el.done).length;
+    const countDone = todoData.filter((el)=> el.done).length;
+    const todoDone = todoData.length - countDone;
 
 
     return (
       <div className="wrap">
-        <AppHeader todo={1} done={countDone}/>
+        <AppHeader todo={todoDone} done={countDone}/>
         <SearchPanel/>
         <TodoList todos={this.state.todoData}
                   onDeleted={this.deleteItem}
