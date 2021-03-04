@@ -4,17 +4,37 @@ import "./ItemAddForm.css"
 
 class ItemAddForm extends Component {
 
+  state = {
+    label: ''
+  }
+
+  onLabelChange = (e) => {
+    this.setState({
+      label: e.target.value
+    })
+  }
+
+  onSubmit = (e) => {
+    e.preventDefault();
+    this.props.onAddItem(this.state.label)
+  }
+
   render() {
 
     const {onAddItem} = this.props
 
     return (
-      <div className='item-add-form__wrap'>
-        <input placeholder='add todo'/>
-        <button type="button" className="btn btn-outline-secondary" onClick={() => onAddItem('Hello world')}>
+      <form className='item-add-form__wrap'
+            onSubmit={this.onSubmit}
+      >
+        <input className="form-control"
+               placeholder='add todo'
+               onChange={this.onLabelChange}
+        />
+        <button type="button" className="btn btn-outline-secondary">
           <i className="fa fa-plus-square" aria-hidden="true"/>
         </button>
-      </div>
+      </form>
     )
   }
 }
